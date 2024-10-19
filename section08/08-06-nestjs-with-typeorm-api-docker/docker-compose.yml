@@ -1,0 +1,24 @@
+services:
+  my-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # 현재 경로와 컨테이너 내부의 /usr/src/app 디렉토리를 볼륨 마운팅할 것을 나타냅니다.
+      # 데이터가 유지되고, 핫 리로딩을 실행할 부분을 나타냅니다.
+      - ./src:/myfolder/src
+    # 도커에게 컨테이너 내부로 .env 파일을 로드해야 함을 알려줍니다.
+    env_file:
+      - .env.docker
+    ports:
+      - 3000:3000
+
+  #컴퓨터이름
+  my-database:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: mydocker
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Seoul
+    ports:
+      - 3306:3306
